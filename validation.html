@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body onload="displayStudent()">
+
+	<input type="text" id="studentName" />
+	<button onclick="addStudent()">Add</button>
+	<script type="text/javascript">
+		students = ['arjun','bala']
+		
+		function addStudent(){
+			tempName = document.getElementById('studentName');
+
+			students.push(tempName.value);
+			tempName.value = ""
+			displayStudent();
+		}
+
+		function deleteStudent(id){
+			students.splice(id,1);
+			displayStudent();
+		}
+
+		function displayStudent(){
+			temp = document.getElementById('data');
+		
+			temp.innerHTML = "<ul>";
+			for(i=0;i<students.length;i++){
+				temp.innerHTML += "<li>"+students[i]+"<button onclick='deleteStudent("+i+")'>Delete</button></li>";
+			}
+			temp.innerHTML += "</ul>";
+		}
+	</script>
+
+	<div id="data">
+		
+	</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
