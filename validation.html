@@ -4,25 +4,75 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title></title>
+	<style type="text/css">
+		#errMsg{
+			color: red;
+		}
+	</style>
 </head>
 <body onload="displayStudent()">
 
 	<input type="text" id="studentName" />
-	<button onclick="addStudent()">Add</button>
+	<span id="errMsg"></span>
+	<br/>
+	<button onclick="addStudent()">Save</button>
+
 	<script type="text/javascript">
+		//initial array
 		students = ['arjun','bala']
+
+		idToEdit = -1;
 		
+
+
+		//to create student
 		function addStudent(){
+
+
+			//get name from the textbox
 			tempName = document.getElementById('studentName');
 
-			students.push(tempName.value);
-			tempName.value = ""
-			displayStudent();
+			if(tempName.value==""){
+				document.getElementById('errMsg').innerHTML = "Please Enter name";
+				tempName.style.border = "2px solid red"
+			}
+			else{
+				if(idToEdit>=0){
+					students[idToEdit] = tempName.value;
+					idToEdit = -1;
+				}
+				else{
+					//pushed into array
+					students.push(tempName.value);	
+				}
+
+				//clearing the textbox
+				tempName.value = ""
+
+				//refresh the student data
+				displayStudent();
+			}
+
+			
 		}
 
 		function deleteStudent(id){
+
+			//we are removing the id indexed element
 			students.splice(id,1);
+
+			//refresh the student data
 			displayStudent();
+		}
+
+		function setStudent(id){
+			//you will have id to edit
+			//get name from the textbox
+			tempName = document.getElementById('studentName');
+
+			idToEdit = id;
+			tempName.value=students[id]
+
 		}
 
 		function displayStudent(){
@@ -30,7 +80,7 @@
 		
 			temp.innerHTML = "<ul>";
 			for(i=0;i<students.length;i++){
-				temp.innerHTML += "<li>"+students[i]+"<button onclick='deleteStudent("+i+")'>Delete</button></li>";
+				temp.innerHTML += "<li>"+students[i]+"<button onclick='deleteStudent("+i+")'>Delete</button><button onclick='setStudent("+i+")'>Edit</button></li>";
 			}
 			temp.innerHTML += "</ul>";
 		}
